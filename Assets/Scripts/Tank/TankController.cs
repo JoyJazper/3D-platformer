@@ -4,7 +4,6 @@ public class TankController
     public TankController(TankModel initTankModel, TankView initTankView){
         tankModel = initTankModel;
         tankView = GameObject.Instantiate<TankView>(initTankView);
-        Debug.Log("Tank COntroller has been created");
     }
 
     private TankModel tankModel;

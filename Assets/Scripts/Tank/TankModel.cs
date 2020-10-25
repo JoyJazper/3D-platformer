@@ -5,7 +5,7 @@
         health = initHealth;
 
     }
-    
+
     private int speed = 10;
     public int Speed {
         get{
