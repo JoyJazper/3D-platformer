@@ -1,17 +1,13 @@
 ﻿using UnityEngine;
 public class TankController
 {
-    public TankController(TankModel initTankModel, TankView initTankView){
+    public TankController(TankModel initTankModel, TankView initTankView, Joystick tempStick){
         tankModel = initTankModel;
         tankView = GameObject.Instantiate<TankView>(initTankView);
+        tankView.Joystick = tempStick;
     }
 
-
-
-    private void Update() {
-        InputToMove();
-        tankView.updateMovement(horizontalMove, verticalMove);
-    }
+    
 
     private TankModel tankModel;
     public TankModel TankModel{
@@ -26,21 +22,4 @@ public class TankController
             return tankView;
         }
     }
-
-
-    #region Player Movement Input
-
-        float horizontalMove;
-        float verticalMove;
-
-        //Input update
-        public void InputToMove(){
-            horizontalMove = Input.GetAxisRaw("Horizontal")*tankModel.Speed;
-            verticalMove = Input.GetAxisRaw("Vertical")*tankModel.Speed;
-        }
-
-
-    #endregion
-
-
 }

@@ -3,13 +3,17 @@
     public TankView tankView;
     private TankModel tankModel;
     private TankController tankController;
+    protected Joystick stick;
     private void Start() {
-        tankController = CreateTank();
+        
+        InputService joystickInstance = InputService.Instance;
+        stick = joystickInstance.Joystick;
+        tankController = CreateTank(stick);
     }
 
-    private TankController CreateTank(){
+    private TankController CreateTank(Joystick stick){
         tankModel = new TankModel(10,100);
-        tankController = new TankController(tankModel,tankView);
+        tankController = new TankController(tankModel, tankView, stick);
         return tankController;
     }
 }
