@@ -1,5 +1,4 @@
-﻿
-public class TankService : MonoSingleton<TankService>
+﻿public class TankService : MonoSingleton<TankService>
 {
     public TankView tankView;
     private TankModel tankModel;

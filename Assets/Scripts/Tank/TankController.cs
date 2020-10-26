@@ -6,6 +6,13 @@ public class TankController
         tankView = GameObject.Instantiate<TankView>(initTankView);
     }
 
+
+
+    private void Update() {
+        InputToMove();
+        tankView.updateMovement(horizontalMove, verticalMove);
+    }
+
     private TankModel tankModel;
     public TankModel TankModel{
         get{
@@ -19,5 +26,21 @@ public class TankController
             return tankView;
         }
     }
+
+
+    #region Player Movement Input
+
+        float horizontalMove;
+        float verticalMove;
+
+        //Input update
+        public void InputToMove(){
+            horizontalMove = Input.GetAxisRaw("Horizontal")*tankModel.Speed;
+            verticalMove = Input.GetAxisRaw("Vertical")*tankModel.Speed;
+        }
+
+
+    #endregion
+
 
 }
