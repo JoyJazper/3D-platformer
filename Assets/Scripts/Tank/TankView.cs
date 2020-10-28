@@ -14,7 +14,7 @@ public class TankView : MonoBehaviour
 
         private void MovePlayer(){
             playerPosition = transform.position;
-            Vector3 movement = new Vector3(horizontalMove, 0, verticalMove);
+            Vector3 movement = new Vector3(horizontalMove, 0, -verticalMove);
             transform.position = playerPosition  + movement;
             transform.rotation = Quaternion.LookRotation(movement*10);
         }
@@ -38,8 +38,8 @@ public class TankView : MonoBehaviour
         }
 
         private void InputToMove(){
-            horizontalMove = joystick.Horizontal*0.1f;
-            verticalMove = joystick.Vertical*0.1f;
+            verticalMove = joystick.Horizontal*0.1f;
+            horizontalMove = joystick.Vertical*0.1f;
         }
 
     #endregion
