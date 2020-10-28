@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class InputService : MonoSingleton<InputService>
+﻿public class InputService : MonoSingleton<InputService>
 {
     private Joystick joystick;
     public Joystick Joystick{

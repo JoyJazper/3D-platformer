@@ -4,19 +4,22 @@ public class TankView : MonoBehaviour
     #region Player movement Physics
 
         private Vector3 playerPosition;
+        private Rigidbody playerBody;
         
         private void Start() {
             playerPosition = transform.position;
+            playerBody = gameObject.GetComponent<Rigidbody>();
         }
         private void FixedUpdate(){
             MovePlayer();
         }
 
         private void MovePlayer(){
-            playerPosition = transform.position;
-            Vector3 movement = new Vector3(horizontalMove, 0, -verticalMove);
-            transform.position = playerPosition  + movement;
-            transform.rotation = Quaternion.LookRotation(movement*10);
+            playerBody.AddForce(transform.forward*verticalMove, ForceMode.VelocityChange);
+            Vector3 rotationValue = new Vector3(0, horizontalMove, 0);
+            if(horizontalMove > 0.2 || horizontalMove < -0.2 ){
+                transform.Rotate(0f, horizontalMove*3, 0f);
+            }
         }
 
     #endregion
@@ -26,6 +29,21 @@ public class TankView : MonoBehaviour
 
         private float horizontalMove;
         private float verticalMove;
+        
+        private float speed;
+        public float Speed{
+            set{
+                speed = value;
+            }
+        }
+
+        private float thrust;
+        public float Thrust{
+            set{
+                thrust = value;
+            }
+        }
+
         private Joystick joystick;
         public Joystick Joystick{
             set{
@@ -38,8 +56,8 @@ public class TankView : MonoBehaviour
         }
 
         private void InputToMove(){
-            verticalMove = joystick.Horizontal*0.1f;
-            horizontalMove = joystick.Vertical*0.1f;
+            horizontalMove = joystick.Horizontal*thrust;
+            verticalMove = joystick.Vertical*speed;
         }
 
     #endregion

@@ -5,6 +5,8 @@ public class TankController
         tankModel = initTankModel;
         tankView = GameObject.Instantiate<TankView>(initTankView);
         tankView.Joystick = tempStick;
+        tankView.Speed = tankModel.Speed;
+        tankView.Thrust = tankModel.Thrust;
     }
 
     
