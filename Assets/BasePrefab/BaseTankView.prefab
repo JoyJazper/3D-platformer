@@ -1,5 +1,34 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!54 &3146678592316467926
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475681863504901100}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 2
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!65 &1062995486241636839
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475681863504901100}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5737364, y: 1.656889, z: 1.6581984}
+  m_Center: {x: 0.009048462, y: 0.93498707, z: -0.04218757}
 --- !u!114 &7855446207780780304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,6 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd7c201ae1db414ea881772f902515c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
+  thrust: 0
 --- !u!1001 &1475681863504999676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21,7 +52,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100112, guid: 3e138e6c1096c2a499c3707e18a5fe62, type: 3}
       propertyPath: m_Name
-      value: TankView
+      value: BaseTankView
       objectReference: {fileID: 0}
     - target: {fileID: 400112, guid: 3e138e6c1096c2a499c3707e18a5fe62, type: 3}
       propertyPath: m_LocalPosition.x
