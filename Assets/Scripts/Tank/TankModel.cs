@@ -1,9 +1,22 @@
 ﻿public class TankModel
 {
+    public TankModel(TankScriptableObject objectType){
+        speed = objectType.speed/10;
+        thrust = objectType.thrust/100;
+        health = objectType.health;
+    }
+
     public TankModel(float initSpeed, float initThrust, int initHealth){
         speed = initSpeed/10;
         thrust = initThrust/100;
         health = initHealth;
+    }
+
+    private TankType tankType;
+    public TankType TankType{
+        get{
+            return tankType;
+        }
     }
 
     private float speed;

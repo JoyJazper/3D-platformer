@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-public class TankService : MonoSingleton<TankService>
+
+public class EnemyService : MonoSingleton<EnemyService>
 {
     public TankView tankView;
     private Camera mainCamera;
@@ -8,19 +9,12 @@ public class TankService : MonoSingleton<TankService>
     private TankController tankController;
     protected Joystick stick;
     private void Start() {
-        GetJoystick();
         CreateTank();
-        AssignCamera();
-    }
-
-    private void GetJoystick(){
-        InputService joystickInstance = InputService.Instance;
-        stick = joystickInstance.Joystick;
     }
 
     #region Tank Creator
         private void CreateTank(){
-            for(int i = 0; i < 1; i++){
+            for(int i = 0; i < 3; i++){
                 tankController = CreateTankController(addedPlayers[i], stick);
             }
             
@@ -38,4 +32,5 @@ public class TankService : MonoSingleton<TankService>
         playerObj = tankController.TankView.gameObject;
         mainCamera.gameObject.GetComponent<PlayerTracker>().PlayerTransform = playerObj.GetComponent<Transform>();
     }
+
 }
