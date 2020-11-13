@@ -16,4 +16,4 @@ MonoBehaviour:
   TankName: BasicBlue
   speed: 10
   thrust: 30
-  health: 100
+  health: 200

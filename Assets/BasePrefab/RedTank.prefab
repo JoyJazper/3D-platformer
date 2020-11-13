@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7228726969712826759}
   - component: {fileID: 5012657867198023678}
   - component: {fileID: 5375562733605352934}
-  - component: {fileID: 378445344285162856}
+  - component: {fileID: 6083659106620194521}
+  - component: {fileID: 5287115855784685425}
   m_Layer: 0
   m_Name: RedTank
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954242207227719263}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.76, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -63,7 +64,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5737364, y: 1.656889, z: 1.6581984}
   m_Center: {x: 0.009048462, y: 0.93498707, z: -0.04218757}
---- !u!114 &378445344285162856
+--- !u!114 &6083659106620194521
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,9 +73,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1954242207227719263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccd7c201ae1db414ea881772f902515c, type: 3}
+  m_Script: {fileID: 11500000, guid: 477d4f17122e05449b67d4fb60fbdf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0.8
+  thrust: 0.5
+  health: 100
+--- !u!95 &5287115855784685425
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954242207227719263}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2007858465831066804
 GameObject:
   m_ObjectHideFlags: 0
