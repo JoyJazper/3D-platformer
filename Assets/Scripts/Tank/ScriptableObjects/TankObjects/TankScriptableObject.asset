@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56ef5af062133804a8f9f0aa8d40bb91, type: 3}
-  m_Name: TankScriptableObject 1
+  m_Name: TankScriptableObject
   m_EditorClassIdentifier: 
-  type: 1
-  TankName: BasicBlue
+  type: {fileID: 6083659106620194521, guid: 367cefe22f07c7b47a9a4e18ed24a77b, type: 3}
+  tankName: Red Dragon
   speed: 10
   thrust: 30
-  health: 200
+  health: 100

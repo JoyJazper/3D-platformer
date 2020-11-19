@@ -3,19 +3,19 @@ using UnityEngine;
 public class TankService : MonoSingleton<TankService>
 {
     private Camera mainCamera;
-
+    [SerializeField]
+    private float safeDistance = 30f;
     [SerializeField]
     private List<EnemyController> enemyList;
+
     [SerializeField]
     private List<Transform> spawnPositions;
     [SerializeField]
     private SpawnerObject spawnerObject;
-    public List<TankScriptableObject> enemiesToGenerate;
-    public Transform enemyParent;
-    public EnemyController redTank;
-    public EnemyController blueTank;
-    public EnemyController greenTank;
-
+    [SerializeField]
+    private List<TankScriptableObject> enemiesToGenerate;
+    [SerializeField]
+    private Transform enemyParent;
     [SerializeField]
     private TankController playerTank;
 
@@ -28,7 +28,6 @@ public class TankService : MonoSingleton<TankService>
 
     private void Start() {
         populateSpawnPositions();
-        CreatePlayer();
         EnemyController createdEnemy;
         createdEnemy = CreateEnemy(enemiesToGenerate[0]);
         enemyList.Add(createdEnemy);
@@ -36,62 +35,99 @@ public class TankService : MonoSingleton<TankService>
         enemyList.Add(createdEnemy);
         createdEnemy = CreateEnemy(enemiesToGenerate[2]);
         enemyList.Add(createdEnemy);
+        CreatePlayer();
     }
 
-    // Player Creation...
-    private void CreatePlayer(){
-        Vector3 randomSpawnPosition = GetRandomSpawnPos();
-        playerTank.transform.position = randomSpawnPosition;
-        Joystick joystick = GetJoystick();
-        AssignJoystick(playerTank, joystick);
-        AssignCamera(playerTank);
-    }
+    #region Player Generation
 
-    private Joystick GetJoystick(){
-        InputService joystickInstance = InputService.Instance;
-        Joystick tempJoystick;
-        tempJoystick = joystickInstance.Joystick;
-        return tempJoystick;
-    }
-
-    private void AssignJoystick(TankController tankController,  Joystick joystick){
-        tankController.Joystick = joystick;
-    }
-
-    private void AssignCamera(TankController player){
-        mainCamera = Camera.main;
-        GameObject playerObj;
-        playerObj = player.gameObject;
-        mainCamera.gameObject.GetComponent<PlayerTracker>().PlayerTransform = playerObj.GetComponent<Transform>();
-    }
-
-    // Enemy Creation... Enemy tank factory pattern and controlled by EnemyService
-
-    private void populateSpawnPositions(){
-        spawnPositions.AddRange(spawnerObject.gameObject.GetComponentsInChildren<Transform>());
-    }
-
-    private EnemyController CreateEnemy(TankScriptableObject tankData){
-        TankType type = tankData.type;
-        EnemyController enemy;
-        Vector3 randomSpawnPosition = GetRandomSpawnPos();
-        if(type == TankType.Blue){
-            enemy = GameObject.Instantiate(blueTank, randomSpawnPosition, Quaternion.identity, enemyParent);
-        } else if(type == TankType.Red){
-            enemy = GameObject.Instantiate(redTank, randomSpawnPosition, Quaternion.identity, enemyParent);
-        } else {
-            enemy = GameObject.Instantiate(greenTank, randomSpawnPosition, Quaternion.identity, enemyParent);
+        private void CreatePlayer(){
+            Vector3 randomSpawnPosition = GetSafeSpawnPos();
+            playerTank = GameObject.Instantiate(playerTank, randomSpawnPosition, Quaternion.identity);
+            Joystick joystick = GetJoystick();
+            AssignJoystick(playerTank, joystick);
+            AssignCamera(playerTank);
         }
-        enemy.Health = tankData.health;
-        enemy.Speed = tankData.speed;
-        enemy.Thrust = tankData.thrust;
-        enemy.gameObject.name = tankData.TankName;
-        return enemy;
-    }
 
-    private Vector3 GetRandomSpawnPos(){
-        Transform randomSpawnTransform = spawnPositions[Random.Range(1,spawnPositions.Count)];
-        Vector3 randomSpawnPos = randomSpawnTransform.position;
-        return randomSpawnPos;
-    }
+        private Vector3 GetSafeSpawnPos(){
+            bool isSafe = false;
+            Vector3 randomSpawnPos = new Vector3(0f,0f,0f);
+            Transform randomSpawnTransform;
+            for(int i = 1; i < spawnPositions.Count; i++){
+                randomSpawnTransform = spawnPositions[Random.Range(i,spawnPositions.Count-1)];
+                isSafe = CheckSafetyFromEnemy(randomSpawnTransform.position);
+                randomSpawnPos = randomSpawnTransform.position;
+                if(isSafe){
+                    break;
+                } 
+            }
+            if(!isSafe){
+                randomSpawnTransform = spawnPositions[Random.Range(1,spawnPositions.Count)];
+                //player GodMode few seconds - defence Logic;
+            }
+            return randomSpawnPos;
+        }
+
+        private bool CheckSafetyFromEnemy(Vector3 spawnPos){
+            bool isSafe = false;
+            if(enemyList != null){
+                for(int i = 0; i < enemyList.Count; i++){
+                    Vector3 enemyPos = enemyList[i].GetComponent<Transform>().position;
+                    float enemyDistance = Vector3.Distance(spawnPos, enemyPos);
+                    if(enemyDistance < safeDistance){
+                        isSafe = false;
+                        break;
+                    } else {
+                        isSafe = true;
+                    }
+                }
+            } else {
+                Debug.LogError("Null reference as it skipped!!");
+            }
+            return isSafe;
+        }
+
+        private Joystick GetJoystick(){
+            InputService joystickInstance = InputService.Instance;
+            Joystick tempJoystick;
+            tempJoystick = joystickInstance.Joystick;
+            return tempJoystick;
+        }
+
+        private void AssignJoystick(TankController tankController,  Joystick joystick){
+            tankController.Joystick = joystick;
+        }
+
+        private void AssignCamera(TankController player){
+            mainCamera = Camera.main;
+            GameObject playerObj;
+            playerObj = player.gameObject;
+            mainCamera.gameObject.GetComponent<PlayerTracker>().PlayerTransform = playerObj.GetComponent<Transform>();
+        }
+
+    #endregion
+    
+    #region Enemy Generation
+
+        private void populateSpawnPositions(){
+            spawnPositions.AddRange(spawnerObject.gameObject.GetComponentsInChildren<Transform>());
+        }
+
+        private EnemyController CreateEnemy(TankScriptableObject tankData){
+            EnemyController enemy = tankData.type;
+            Vector3 randomSpawnPosition = GetRandomSpawnPos();
+            enemy = GameObject.Instantiate(enemy, randomSpawnPosition, Quaternion.identity, enemyParent);
+            enemy.Health = tankData.health;
+            enemy.Speed = tankData.speed;
+            enemy.Thrust = tankData.thrust;
+            enemy.gameObject.name = tankData.tankName;
+            return enemy;
+        }
+
+        private Vector3 GetRandomSpawnPos(){
+            Transform randomSpawnTransform = spawnPositions[Random.Range(1,spawnPositions.Count)];
+            Vector3 randomSpawnPos = randomSpawnTransform.position;
+            return randomSpawnPos;
+        }
+
+    #endregion
 }

@@ -3,8 +3,8 @@
 [CreateAssetMenu(fileName = "TankScriptableObject", menuName = "ScriptableObjects/NewTankScriptable")]
 public class TankScriptableObject : ScriptableObject
 {
-    public TankType type;
-    public string TankName;
+    public EnemyController type;
+    public string tankName;
     public float speed;
     public float thrust;
     public int health;

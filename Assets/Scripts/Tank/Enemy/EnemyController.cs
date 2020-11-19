@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 [RequireComponent(typeof(Animator))]
-public class EnemyController : MonoBehaviour, Idamagable, IAttacker
+public class EnemyController : MonoBehaviour, Idamagable
 {
     [SerializeField]
     private float speed = 0.8f;
@@ -27,17 +27,25 @@ public class EnemyController : MonoBehaviour, Idamagable, IAttacker
         }
     }
 
-    private TankService tankService;
-    private Transform player;
+    //private TankService tankService;
+    //private Transform player;
 
     private void Start(){
-        tankService = TankService.Instance;
-        player = tankService.PlayerTransform;
+        //tankService = TankService.Instance;
     }
 
-    private void LateUpdate(){
-        transform.LookAt(player);
-    }
+    // private void LateUpdate(){
+    //     if(player != null){
+    //         transform.LookAt(player);
+    //     } else {
+    //         try{
+    //             player = tankService.PlayerTransform;
+    //         }
+    //         catch{
+
+    //         }
+    //     }
+    // }
 
     public void Damage(int damage){
         health = health - damage;

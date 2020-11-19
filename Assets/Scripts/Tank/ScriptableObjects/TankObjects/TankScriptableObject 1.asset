@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56ef5af062133804a8f9f0aa8d40bb91, type: 3}
-  m_Name: TankScriptableObject
+  m_Name: TankScriptableObject 1
   m_EditorClassIdentifier: 
-  type: 0
-  TankName: BasicRed
+  type: {fileID: 8991990489395633907, guid: 1c3f61eccc282fd489d76e6575eb1147, type: 3}
+  tankName: Blue Ranger
   speed: 10
   thrust: 30
-  health: 100
+  health: 200
