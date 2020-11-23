@@ -27,6 +27,8 @@ public class EnemyController : MonoBehaviour, Idamagable
         }
     }
 
+
+
     //private TankService tankService;
     //private Transform player;
 
@@ -50,9 +52,20 @@ public class EnemyController : MonoBehaviour, Idamagable
     public void Damage(int damage){
         health = health - damage;
         if(health <= 0){
-            // TODO : apply animations named death in the animator of enemy using particle system.
-
+            StartCoroutine(blastTank());
         }
+    }
+
+    private IEnumerator blastTank(){
+        //blastEffect.Play();
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
+        GetComponent<Collider>().enabled = false;
+        //float playBackTime = blastEffect.main.duration;
+        //yield return new WaitForSecondsRealtime(playBackTime);
+        yield return null;
+        Destroy(this.gameObject);
     }
 
     public void Attack(){

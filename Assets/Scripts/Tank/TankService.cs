@@ -19,6 +19,7 @@ public class TankService : MonoSingleton<TankService>
     [SerializeField]
     private TankController playerTank;
 
+    private Joystick joystick;
     public Transform PlayerTransform{
         get{
             Transform playerTransform = playerTank.transform;
@@ -28,13 +29,11 @@ public class TankService : MonoSingleton<TankService>
 
     private void Start() {
         populateSpawnPositions();
-        EnemyController createdEnemy;
-        createdEnemy = CreateEnemy(enemiesToGenerate[0]);
-        enemyList.Add(createdEnemy);
-        createdEnemy = CreateEnemy(enemiesToGenerate[1]);
-        enemyList.Add(createdEnemy);
-        createdEnemy = CreateEnemy(enemiesToGenerate[2]);
-        enemyList.Add(createdEnemy);
+        for(int i = 0; i < enemiesToGenerate.Count; i++){
+            EnemyController createdEnemy;
+            createdEnemy = CreateEnemy(enemiesToGenerate[i]);
+            enemyList.Add(createdEnemy);
+        }
         CreatePlayer();
     }
 
@@ -43,8 +42,8 @@ public class TankService : MonoSingleton<TankService>
         private void CreatePlayer(){
             Vector3 randomSpawnPosition = GetSafeSpawnPos();
             playerTank = GameObject.Instantiate(playerTank, randomSpawnPosition, Quaternion.identity);
-            Joystick joystick = GetJoystick();
-            AssignJoystick(playerTank, joystick);
+            InputService inputService = GetControls();
+            AssignControls(playerTank, inputService);
             AssignCamera(playerTank);
         }
 
@@ -86,15 +85,15 @@ public class TankService : MonoSingleton<TankService>
             return isSafe;
         }
 
-        private Joystick GetJoystick(){
-            InputService joystickInstance = InputService.Instance;
-            Joystick tempJoystick;
-            tempJoystick = joystickInstance.Joystick;
-            return tempJoystick;
+        private InputService GetControls(){
+            InputService ControlInstance = InputService.Instance;
+            return ControlInstance;
         }
 
-        private void AssignJoystick(TankController tankController,  Joystick joystick){
-            tankController.Joystick = joystick;
+        private void AssignControls(TankController tankController,  InputService inputService){
+            tankController.Joystick = inputService.Joystick;
+            tankController.FireButton = inputService.FireButton;
+            tankController.FireForce = inputService.FireForce;
         }
 
         private void AssignCamera(TankController player){
