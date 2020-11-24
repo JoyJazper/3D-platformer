@@ -3,11 +3,10 @@ using UnityEngine;
 public class TankService : MonoSingleton<TankService>
 {
     private Camera mainCamera;
-    [SerializeField]
     private float safeDistance = 30f;
+    // If i removed serialized field code did not work. why?!!
     [SerializeField]
     private List<EnemyController> enemyList;
-
     [SerializeField]
     private List<Transform> spawnPositions;
     [SerializeField]
@@ -19,21 +18,9 @@ public class TankService : MonoSingleton<TankService>
     [SerializeField]
     private TankController playerTank;
 
-    private Joystick joystick;
-    public Transform PlayerTransform{
-        get{
-            Transform playerTransform = playerTank.transform;
-            return playerTransform;
-        }
-    }
-
     private void Start() {
-        populateSpawnPositions();
-        for(int i = 0; i < enemiesToGenerate.Count; i++){
-            EnemyController createdEnemy;
-            createdEnemy = CreateEnemy(enemiesToGenerate[i]);
-            enemyList.Add(createdEnemy);
-        }
+        PopulateSpawnPositions();
+        GenerateEnemies();
         CreatePlayer();
     }
 
@@ -61,7 +48,6 @@ public class TankService : MonoSingleton<TankService>
             }
             if(!isSafe){
                 randomSpawnTransform = spawnPositions[Random.Range(1,spawnPositions.Count)];
-                //player GodMode few seconds - defence Logic;
             }
             return randomSpawnPos;
         }
@@ -80,7 +66,7 @@ public class TankService : MonoSingleton<TankService>
                     }
                 }
             } else {
-                Debug.LogError("Null reference as it skipped!!");
+                isSafe = true;
             }
             return isSafe;
         }
@@ -107,19 +93,27 @@ public class TankService : MonoSingleton<TankService>
     
     #region Enemy Generation
 
-        private void populateSpawnPositions(){
-            spawnPositions.AddRange(spawnerObject.gameObject.GetComponentsInChildren<Transform>());
+        private void GenerateEnemies(){
+            for(int i = 0; i < enemiesToGenerate.Count; i++){
+                EnemyController createdEnemy;
+                createdEnemy = CreateEnemy(enemiesToGenerate[i]);
+                enemyList.Add(createdEnemy);
+            }
         }
 
         private EnemyController CreateEnemy(TankScriptableObject tankData){
             EnemyController enemy = tankData.type;
             Vector3 randomSpawnPosition = GetRandomSpawnPos();
             enemy = GameObject.Instantiate(enemy, randomSpawnPosition, Quaternion.identity, enemyParent);
+            AssignEnemyValues(enemy, tankData);
+            return enemy;
+        }
+
+        private void AssignEnemyValues(EnemyController enemy, TankScriptableObject tankData){
             enemy.Health = tankData.health;
             enemy.Speed = tankData.speed;
             enemy.Thrust = tankData.thrust;
             enemy.gameObject.name = tankData.tankName;
-            return enemy;
         }
 
         private Vector3 GetRandomSpawnPos(){
@@ -129,4 +123,8 @@ public class TankService : MonoSingleton<TankService>
         }
 
     #endregion
+
+    private void PopulateSpawnPositions(){
+        spawnPositions.AddRange(spawnerObject.gameObject.GetComponentsInChildren<Transform>());
+    }
 }

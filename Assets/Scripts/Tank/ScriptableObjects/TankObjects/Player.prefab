@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletHandle: {fileID: 389532498617300280}
+  blastTankEffect: {fileID: 706192631129879677}
   speed: 0.8
   thrust: 0.5
   health: 100
@@ -581,6 +582,12 @@ PrefabInstance:
 --- !u!4 &706192631110524851 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 436668, guid: ee49a9a8678ecf8468eb488e1ac8d42b,
+    type: 3}
+  m_PrefabInstance: {fileID: 706192631110170127}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &706192631129879677 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19874418, guid: ee49a9a8678ecf8468eb488e1ac8d42b,
     type: 3}
   m_PrefabInstance: {fileID: 706192631110170127}
   m_PrefabAsset: {fileID: 0}

@@ -2,7 +2,6 @@
 
 public class BulletService : MonoSingleton<BulletService>
 {
-    //Should be implemented using interface i guess. As anyone can call Fire bullet by this script.
     public void FireBullet(BulletScriptableObject bulletType, Transform bulletHandle, float distance){
         BulletController bullet;
         bullet = bulletType.Bullet;
