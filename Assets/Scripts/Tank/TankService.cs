@@ -4,10 +4,7 @@ public class TankService : MonoSingleton<TankService>
 {
     private Camera mainCamera;
     private float safeDistance = 30f;
-    // If i removed serialized field code did not work. why?!!
-    [SerializeField]
     private List<EnemyController> enemyList;
-    [SerializeField]
     private List<Transform> spawnPositions;
     [SerializeField]
     private SpawnerObject spawnerObject;
@@ -18,6 +15,11 @@ public class TankService : MonoSingleton<TankService>
     [SerializeField]
     private TankController playerTank;
 
+    private void Awake()
+    {
+        enemyList = new List<EnemyController>();
+        spawnPositions = new List<Transform>();
+    }
     private void Start() {
         PopulateSpawnPositions();
         GenerateEnemies();
