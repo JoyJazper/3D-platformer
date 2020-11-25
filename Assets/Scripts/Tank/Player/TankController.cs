@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody))]
 public class TankController : MonoBehaviour, IDamagable
 {
+    public event Action OnDeath;
     private float horizontalMove;
     private float verticalMove;
     private float fireForceValue;
@@ -51,6 +53,10 @@ public class TankController : MonoBehaviour, IDamagable
 
     private void Update(){
         InputToMove();
+        //To test On Death event
+        if(Input.GetKeyDown(KeyCode.Space)){
+            KillTank();
+        }
     }
 
     private void FixedUpdate() {
@@ -108,10 +114,10 @@ public class TankController : MonoBehaviour, IDamagable
         }
 
         private void KillTank(){
+            OnDeath();
             Rigidbody rigidbody = GetComponent<Rigidbody>();
             rigidbody.velocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
-            GetComponent<Collider>().enabled = false;
             StartCoroutine(blastTank(blastTankEffect));
         }
 

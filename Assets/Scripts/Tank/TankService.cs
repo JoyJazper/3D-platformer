@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 public class TankService : MonoSingleton<TankService>
 {
@@ -14,6 +15,7 @@ public class TankService : MonoSingleton<TankService>
     private Transform enemyParent;
     [SerializeField]
     private TankController playerTank;
+    private PlayerTracker playerTracker;
 
     private void Awake()
     {
@@ -32,6 +34,7 @@ public class TankService : MonoSingleton<TankService>
             Vector3 randomSpawnPosition = GetSafeSpawnPos();
             playerTank = GameObject.Instantiate(playerTank, randomSpawnPosition, Quaternion.identity);
             InputService inputService = GetControls();
+            playerTank.OnDeath += FlushTanks;
             AssignControls(playerTank, inputService);
             AssignCamera(playerTank);
         }
@@ -88,7 +91,9 @@ public class TankService : MonoSingleton<TankService>
             mainCamera = Camera.main;
             GameObject playerObj;
             playerObj = player.gameObject;
-            mainCamera.gameObject.GetComponent<PlayerTracker>().PlayerTransform = playerObj.GetComponent<Transform>();
+            playerTracker = mainCamera.gameObject.GetComponent<PlayerTracker>();
+            playerTracker.PlayerTransform = playerObj.GetComponent<Transform>();
+            player.OnDeath += playerTracker.UnFollowPlayer;
         }
 
     #endregion
@@ -128,5 +133,22 @@ public class TankService : MonoSingleton<TankService>
 
     private void PopulateSpawnPositions(){
         spawnPositions.AddRange(spawnerObject.gameObject.GetComponentsInChildren<Transform>());
+    }
+
+    private void FlushTanks(){
+        for(int i = 0; i < enemyList.Count; i++){
+            StartCoroutine(DestroyObject(enemyList[i].gameObject));
+        }
+        UnSubscribeOnDeath();
+    }
+
+    private void UnSubscribeOnDeath(){
+        playerTank.OnDeath -= FlushTanks;
+        playerTank.OnDeath -= playerTracker.UnFollowPlayer;
+    }
+
+    IEnumerator DestroyObject(GameObject toDestroy){
+        Destroy(toDestroy);
+        yield return null;
     }
 }
