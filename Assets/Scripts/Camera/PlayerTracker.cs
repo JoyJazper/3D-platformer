@@ -3,14 +3,15 @@
 public class PlayerTracker : MonoBehaviour
 {
     private Vector3 offset = new Vector3(0f, 10f, -8f);
-    private Transform playerTransform;
     private Transform cameraRig;
     private Vector3 rigPosition;
+    private Transform playerTransform;
     public Transform PlayerTransform{
         set{
             playerTransform = value;
         }
     }
+    private bool playerAlive = true;
 
     private void Start() {
         SetCamera();
@@ -25,8 +26,14 @@ public class PlayerTracker : MonoBehaviour
         transform.position = rigPosition + offset;
     }
     private void FollowPlayer(){
-        rigPosition = playerTransform.transform.position;
-        cameraRig.transform.position = rigPosition;
-        cameraRig.transform.rotation = playerTransform.transform.rotation;
+        if(playerAlive){
+            rigPosition = playerTransform.transform.position;
+            cameraRig.transform.position = rigPosition;
+            cameraRig.transform.rotation = playerTransform.transform.rotation;
+        }
+    }
+
+    public void UnFollowPlayer(){
+        playerAlive = false;
     }
 }

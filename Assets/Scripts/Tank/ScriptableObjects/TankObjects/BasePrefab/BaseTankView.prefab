@@ -41,8 +41,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd7c201ae1db414ea881772f902515c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  thrust: 0
 --- !u!1001 &1475681863504999676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98,6 +96,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 3e138e6c1096c2a499c3707e18a5fe62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 76a2d26f71d3b5c4dad6c408e77fd2e8, type: 2}
+    - target: {fileID: 2300002, guid: 3e138e6c1096c2a499c3707e18a5fe62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 76a2d26f71d3b5c4dad6c408e77fd2e8, type: 2}
+    - target: {fileID: 2300006, guid: 3e138e6c1096c2a499c3707e18a5fe62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 76a2d26f71d3b5c4dad6c408e77fd2e8, type: 2}
+    - target: {fileID: 2300008, guid: 3e138e6c1096c2a499c3707e18a5fe62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 76a2d26f71d3b5c4dad6c408e77fd2e8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e138e6c1096c2a499c3707e18a5fe62, type: 3}
 --- !u!1 &1475681863504901100 stripped
